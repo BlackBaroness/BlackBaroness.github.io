@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Сколько это ещё терпеть?</title>
+<title>Countdown Timer</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -25,16 +25,22 @@
     margin-top: 2rem;
     color: #333;
   }
+  .comparisons {
+    margin-top: 2rem;
+    font-size: 1rem;
+    color: #666;
+  }
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>Всего лишь:</h1>
+  <h1>До 27 октября осталось:</h1>
   <div class="timer" id="countdown"></div>
+  <div class="comparisons" id="comparisons"></div>
 </div>
 <script>
   function updateCountdown() {
-    const targetDate = new Date('2024-10-27T00:00:00+03:00');
+    const targetDate = new Date('2023-10-27T00:00:00+03:00');
     const now = new Date();
     const timeDifference = targetDate - now;
 
@@ -46,10 +52,34 @@
 
       const countdownElement = document.getElementById('countdown');
       countdownElement.innerHTML = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+
+      const comparisonsElement = document.getElementById('comparisons');
+      comparisonsElement.innerHTML = getComparisons(days, hours, minutes, seconds);
     } else {
       const countdownElement = document.getElementById('countdown');
       countdownElement.innerHTML = 'Таймер истек';
     }
+  }
+
+  function getComparisons(days, hours, minutes, seconds) {
+    const comparisons = [
+      `Это как ${days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds} секунд ожидания. (или вообще секунд)`,
+      `Это как ${days * 24 + hours} часов сна. (или вообще часов)`,
+      `Это как ${days * 24 * 60 + hours * 60 + minutes} минут просмотра котиков. (или вообще минут лол)`,
+      `Это как ${days * 10} десятидневок.`,
+      `Это как ${days * 7} недель.`,
+      `Это как ${days * 100}% Уверенность Рейгена (я хз что это за хуйня это чатгпт придумал).`,
+      `Это как ${days * 20} Экзорцизм Рейгена солонкой (че бляь).`,
+      `Это достаточно времени, чтобы ты много поработал.`
+    ];
+
+    let comparisonsHTML = '';
+
+    for (const comparison of comparisons) {
+      comparisonsHTML += `<p>${comparison}</p>`;
+    }
+
+    return comparisonsHTML;
   }
 
   setInterval(updateCountdown, 1000);
