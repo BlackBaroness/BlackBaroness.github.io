@@ -1,35 +1,59 @@
-// Функция для обновления таймера
-function updateTimer(elementId, targetDate, isCountdown) {
-    const now = new Date().getTime();
-    let timeDelta = targetDate - now;
+function updateTimers() {
+  const now = new Date().getTime();
 
-    if (isCountdown) {
-      timeDelta = now - targetDate;
-    }
+  const startTime = new Date('2022-10-23T00:00:00+03:00').getTime();
+  const endTime = new Date('2024-10-27T00:00:00+03:00').getTime();
 
-    const days = Math.floor(timeDelta / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeDelta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDelta % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeDelta % (1000 * 60)) / 1000);
+  const timePassed = now - startTime;
+  const timeRemaining = endTime - now;
 
-    const displayText = `${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
-    document.getElementById(elementId).textContent = displayText;
+  document.getElementById('timePassed').innerHTML = getTimeString(timePassed);
+  document.getElementById('timeRemaining').innerHTML = getTimeString(timeRemaining);
+  document.getElementById('timeUntilAnniversary').innerHTML = `${getTimeString(calculateTimeUntilNext23rd())} (это будет ${getMonthNumber()} месяц)`;
+}
+
+function calculateTimeUntilNext23rd() {
+  const now = new Date();
+  const utcOffset = 3 * 60; // GMT+3 in minutes
+
+  // Calculate the UTC time
+  const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+
+  // Adjust for the desired timezone (GMT+3)
+  const localTime = new Date(utcTime + utcOffset * 60 * 1000);
+
+  let targetDate;
+
+  if (localTime.getDate() >= 23) {
+    // If the current date is 23 or later in the month, move to the next month
+    targetDate = new Date(localTime.getFullYear(), localTime.getMonth() + 1, 23);
+  } else {
+    // Otherwise, stay in the current month
+    targetDate = new Date(localTime.getFullYear(), localTime.getMonth(), 23);
   }
 
-  // Определение дат и вызов функций обновления таймеров
-const targetDate1 = new Date("2024-10-27T00:00:00+03:00").getTime();
-const targetDate2 = new Date("2022-10-23T00:00:00+03:00").getTime();
-const anniversaryDay = 23; // День юбилея (например, 23 ноября)
+  // Calculate the time difference
+  const timeUntilNext23rd = targetDate - localTime;
+  return timeUntilNext23rd
+}
 
-setInterval(() => {
-  updateTimer("countdown1", targetDate1, true);
-  updateTimer("countdown2", targetDate2, false);
-}, 1000);
+function getMonthNumber() {
+  const now = new Date();
+  const baseDate = new Date(2022, 9, 23); // October is month 9
 
-// Обновление таймера до ближайшего месячного юбилея
-const currentDate = new Date();
-const currentMonth = currentDate.getMonth() + 1; // Месяцы нумеруются с 0
-const daysUntilAnniversary = anniversaryDay - currentDate.getDate();
-const monthsUntilAnniversary = daysUntilAnniversary <= 0 ? 12 - currentMonth : 11 - currentMonth;
-const nextAnniversaryDate = new Date(currentDate.getFullYear(), currentMonth + monthsUntilAnniversary - 1, anniversaryDay);
-updateTimer("countdown3", nextAnniversaryDate, true);
+  const monthsDiff = (now.getFullYear() - baseDate.getFullYear()) * 12 + now.getMonth() - baseDate.getMonth();
+  return monthsDiff + 1; // Adding 1 to get the ordinal number
+}
+
+
+function getTimeString(timeInMilliseconds) {
+  const days = Math.floor(timeInMilliseconds / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeInMilliseconds % (1000 * 60)) / 1000);
+
+  return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+}
+
+updateTimers();
+setInterval(updateTimers, 1000);
