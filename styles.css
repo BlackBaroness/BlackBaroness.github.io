@@ -9,11 +9,11 @@ body {
 
 .sandglass-container {
   text-align: center;
+  position: relative;
 }
 
 .sandglass {
   display: inline-block;
-  position: relative;
   width: 200px;
   height: 400px;
   border: 2px solid #333;
@@ -38,9 +38,12 @@ body {
   background-color: #333;
 }
 
-.upper-timer,
-.lower-timer {
-  font-size: 18px;
-  margin-top: 10px;
+.timer-container {
+  text-align: center;
+  margin-top: 20px;
 }
 
+.timer {
+  font-size: 18px;
+  margin: 5px;
+}
