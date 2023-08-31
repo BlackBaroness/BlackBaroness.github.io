@@ -36,6 +36,16 @@ body {
   bottom: 0;
   width: 2px;
   background-color: #333;
+  animation: sandFall linear infinite;
+}
+
+@keyframes sandFall {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
 }
 
 .timer-container {
