@@ -1,26 +1,30 @@
 function updateTimers() {
   const now = new Date().getTime();
-  
-  const startTime = new Date('2022-10-23T00:00:00+03:00').getTime();
-  const endTime = new Date('2024-10-27T00:00:00+03:00').getTime();
-  
-  const timePassed = now - startTime;
-  const timeRemaining = endTime - now;
+  const startDate = new Date('2022-10-23T00:00:00+03:00').getTime();
+  const endDate = new Date('2024-10-27T00:00:00+03:00').getTime();
 
-  const timePassedElement = document.getElementById('timePassed');
-  timePassedElement.innerHTML = getTimeString(timePassed);
+  const upperTimerElement = document.getElementById('upper-timer');
+  const lowerTimerElement = document.getElementById('lower-timer');
+  const sandElement = document.getElementById('sand');
 
-  const timeRemainingElement = document.getElementById('timeRemaining');
-  timeRemainingElement.innerHTML = getTimeString(timeRemaining);
-}
+  const upperTimeRemaining = endDate - now;
+  const lowerTimeElapsed = now - startDate;
 
-function getTimeString(timeInMilliseconds) {
-  const days = Math.floor(timeInMilliseconds / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((timeInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeInMilliseconds % (1000 * 60)) / 1000);
+  const upperDays = Math.floor(upperTimeRemaining / (1000 * 60 * 60 * 24));
+  const upperHours = Math.floor((upperTimeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const upperMinutes = Math.floor((upperTimeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+  const upperSeconds = Math.floor((upperTimeRemaining % (1000 * 60)) / 1000);
 
-  return `${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
+  const lowerDays = Math.floor(lowerTimeElapsed / (1000 * 60 * 60 * 24));
+  const lowerHours = Math.floor((lowerTimeElapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const lowerMinutes = Math.floor((lowerTimeElapsed % (1000 * 60 * 60)) / (1000 * 60));
+  const lowerSeconds = Math.floor((lowerTimeElapsed % (1000 * 60)) / 1000);
+
+  upperTimerElement.textContent = `${upperDays}d ${upperHours}h ${upperMinutes}m ${upperSeconds}s`;
+  lowerTimerElement.textContent = `${lowerDays}d ${lowerHours}h ${lowerMinutes}m ${lowerSeconds}s`;
+
+  const sandHeight = (lowerTimeElapsed / (endDate - startDate)) * 100;
+  sandElement.style.height = `${sandHeight}%`;
 }
 
 updateTimers();
