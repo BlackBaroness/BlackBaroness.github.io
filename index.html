@@ -1,89 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Сколько ещё терпеть?</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
-  .container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  }
-  .timer {
-    font-size: 2rem;
-    margin-top: 2rem;
-    color: #333;
-  }
-  .comparisons {
-    margin-top: 2rem;
-    font-size: 1rem;
-    color: #666;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сколько ещё это терпеть?</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="container">
-  <h1>Осталось всего ничего:</h1>
-  <div class="timer" id="countdown"></div>
-  <div class="comparisons" id="comparisons"></div>
-</div>
-<script>
-  function updateCountdown() {
-    const targetDate = new Date('2024-10-27T00:00:00+03:00');
-    const now = new Date();
-    const timeDifference = targetDate - now;
-
-    if (timeDifference > 0) {
-      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-      const countdownElement = document.getElementById('countdown');
-      countdownElement.innerHTML = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
-
-      const comparisonsElement = document.getElementById('comparisons');
-      comparisonsElement.innerHTML = getComparisons(days, hours, minutes, seconds);
-    } else {
-      const countdownElement = document.getElementById('countdown');
-      countdownElement.innerHTML = 'Таймер истек';
-    }
-  }
-
-  function getComparisons(days, hours, minutes, seconds) {
-    const comparisons = [
-      `Это как ${days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds} секунд ожидания. (или вообще секунд)`,
-      `Это как ${days * 24 + hours} часов сна. (или вообще часов)`,
-      `Это как ${days * 24 * 60 + hours * 60 + minutes} минут просмотра котиков. (или вообще минут лол)`,
-      `Это как ${Math.round(days / 10)} десятидневок.`,
-      `Это как ${Math.round(days / 7)} недель.`,
-      `Это как ${days * 100}% Уверенность Рейгена (я хз что это за хуйня это чатгпт придумал).`,
-      `Это как ${days * 20} Экзорцизм Рейгена солонкой (че бляь).`,
-      `Это достаточно времени, чтобы ты много поработал.`
-    ];
-
-    let comparisonsHTML = '';
-
-    for (const comparison of comparisons) {
-      comparisonsHTML += `<p>${comparison}</p>`;
-    }
-
-    return comparisonsHTML;
-  }
-
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
-</script>
+  <div class="timer-container">
+    <div class="timer" id="timer1">
+      <h2>Прошло:</h2>
+      <div class="time" id="timePassed"></div>
+    </div>
+    <div class="timer" id="timer2">
+      <h2>Осталось:</h2>
+      <div class="time" id="timeRemaining"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
