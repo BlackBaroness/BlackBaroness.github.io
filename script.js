@@ -52,7 +52,7 @@ function getTimeString(timeInMilliseconds) {
   const minutes = Math.floor((timeInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((timeInMilliseconds % (1000 * 60)) / 1000);
 
-  return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+  return `${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
 }
 
 updateTimers();
